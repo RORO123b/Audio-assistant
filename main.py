@@ -1,7 +1,17 @@
 import speech_recognition as sr
 import pyttsx3
-from datetime import datetime, timedelta
+from datetime import datetime
 import requests
+from kivy.app import App
+from kivy.uix.widget import Widget
+
+
+class AudioAssistant(Widget):
+    pass
+
+class AudioAssistant(App):
+    def buil(self):
+        return AudioAssistant()
 
 # WeatherAPI key
 API_KEY = "f5e8240959ba4484bac123118240312"
@@ -119,3 +129,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    AudioAssistant().run()

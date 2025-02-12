@@ -1,4 +1,4 @@
-#!/home/robert/PersonalProjects/Audio/myenv/bin/python3
+#!/home/robert/PersonalProjects/Audio-assistant/myenv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
