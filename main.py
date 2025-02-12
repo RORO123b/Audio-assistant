@@ -128,5 +128,5 @@ def main():
             print("Waiting for a valid command...")
 
 if __name__ == "__main__":
-    main()
     AudioAssistant().run()
+    main()
