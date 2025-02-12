@@ -1,0 +1,47 @@
+#:kivy 1.0.9
+
+<AudioAssistant>:    
+    canvas.before:
+        Color:
+            rgba: 0.15, 0.15, 0.15, 1  # Dark background
+        Rectangle:
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: 1, 1, 1, 0.1  # Subtle overlay effect
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [10]
+
+    BoxLayout:
+        orientation: "vertical"
+        padding: 20
+        spacing: 10
+
+        Label:
+            text: "Assistant Output"
+            font_size: 28
+            color: 1, 1, 1, 1  # White text
+            bold: True
+            size_hint_y: None
+            height: 50
+
+        TextInput:
+            id: text_box
+            multiline: True
+            readonly: True
+            font_size: 18
+            size_hint_y: 0.8
+            background_color: (0.2, 0.2, 0.2, 1)  # Darker text box
+            foreground_color: (1, 1, 1, 1)  # White text
+            padding: [10, 10]
+
+        Button:
+            text: "🎤 Listen"
+            font_size: 22
+            size_hint_y: None
+            height: 60
+            background_color: (0, 0.6, 1, 1)  # Blue button
+            color: (1, 1, 1, 1)  # White text
+            bold: True
