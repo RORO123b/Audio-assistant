@@ -17,8 +17,7 @@ recognizer = sr.Recognizer()
 tts = pyttsx3.init()
 
 class AudioAssistant(BoxLayout):
-
-    def listen(self, instance):
+    def listen(self):
         with sr.Microphone() as source:
             self.update_text("Listening...")
             try:
@@ -58,7 +57,7 @@ class AudioAssistant(BoxLayout):
         tts.runAndWait()
 
     def update_text(self, text):
-        self.text_box.text += text + "\n"
+        self.ids.text_box.text += text + "\n"
 
     def extract_city_and_date(self, command):
         city = None
