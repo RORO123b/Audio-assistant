@@ -4,6 +4,7 @@ from datetime import datetime
 import requests
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
+import webbrowser as wb
 
 # WeatherAPI key
 API_KEY = "f5e8240959ba4484bac123118240312"
@@ -54,6 +55,7 @@ class AudioAssistant(BoxLayout):
             for j in search(query, num=1, stop=1, pause=2, lang="en"):
                 self.respond(f"Here is what I found:")
                 self.update_text(j)
+                wb.open(j)
 
     def respond(self, text):
         self.update_text(f"Assistant: {text}")
