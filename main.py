@@ -5,6 +5,11 @@ import requests
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 import webbrowser as wb
+from transformers import pipeline
+
+
+# Load the DialoGPT model
+chatbot = pipeline("text-generation", model="microsoft/DialoGPT-medium")
 
 # WeatherAPI key
 API_KEY = "f5e8240959ba4484bac123118240312"
@@ -14,12 +19,16 @@ recognizer = sr.Recognizer()
 tts = pyttsx3.init()
 
 class AudioAssistant(BoxLayout):
+    def __init__(self, **kwargs):
+        super(AudioAssistant, self).__init__(**kwargs)
+        self.ids.text_box.text = "Welcome! How can I help you?"
+
     def listen(self):
         with sr.Microphone() as source:
             self.update_text("Listening...")
             try:
                 recognizer.adjust_for_ambient_noise(source)
-                audio = recognizer.listen(source, timeout=5, phrase_time_limit=10)
+                audio = recognizer.listen(source, stream=False, phrase_time_limit=10)
                 command = recognizer.recognize_google(audio)
                 self.update_text(f"You said: {command}")
                 self.process_command(command.lower())
@@ -46,16 +55,10 @@ class AudioAssistant(BoxLayout):
             self.respond("Goodbye! Have a great day!")
             App.get_running_app().stop()
         else:
-            try:
-                from googlesearch import search
-            except ImportError:
-                self.respond("Google search module not found.")
-            query = command
-            self.respond(f"Searching for {query}...")
-            for j in search(query, num=1, stop=1, pause=2, lang="en"):
-                self.respond(f"Here is what I found:")
-                self.update_text(j)
-                wb.open(j)
+            self.respond("Thinking...")
+            response = chatbot(command, max_length=100, do_sample=True)
+            ai_reply = response[0]["generated_text"]
+            self.respond(ai_reply)
 
     def respond(self, text):
         self.update_text(f"Assistant: {text}")
