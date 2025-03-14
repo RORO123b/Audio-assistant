@@ -4,8 +4,9 @@ from datetime import datetime
 import requests
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
-import webbrowser as wb
 from transformers import pipeline
+from kivy.properties import BooleanProperty
+from kivy.clock import Clock
 
 
 # Load the DialoGPT model
@@ -19,11 +20,27 @@ recognizer = sr.Recognizer()
 tts = pyttsx3.init()
 
 class AudioAssistant(BoxLayout):
+
+    listening = BooleanProperty(False)
+
     def __init__(self, **kwargs):
         super(AudioAssistant, self).__init__(**kwargs)
-        self.ids.text_box.text = "Welcome! How can I help you?"
+        self.ids.text_box.text = "Welcome! How can I help you?\n"
 
-    def listen(self):
+    def toggle_listening(self):
+        self.listening = not self.listening
+        button = self.ids.listen_button
+        if self.listening:
+            button.text = "Listening..."
+            button.background_color = (1, 0, 0, 1)
+            button.disabled = True
+            Clock.schedule_once(self.listen, 0.1)
+        else:
+            button.text = "Listen"
+            button.background_color = (0, 0.6, 1, 1)
+            button.disabled = False 
+
+    def listen(self, dt):
         with sr.Microphone() as source:
             self.update_text("Listening...")
             try:
@@ -38,6 +55,7 @@ class AudioAssistant(BoxLayout):
                 self.update_text("Sorry, I didn't catch that.")
             except sr.RequestError as e:
                 self.update_text(f"Could not request results; {e}")
+        self.toggle_listening()
 
     def process_command(self, command):
         if "hello" in command:

@@ -38,11 +38,14 @@
             padding: [10, 10]
 
         Button:
-            text: "🎤 Listen"
+            id: listen_button
+            text: "Listen"
             font_size: 22
             size_hint_y: None
             height: 60
-            background_color: (0, 0.6, 1, 1)  # Blue button
-            color: (1, 1, 1, 1)  # White text
+            background_color: (0, 0.6, 1, 1)
+            color: (1, 1, 1, 1)
             bold: True
-            on_press: root.listen()
+            disabled: root.listening
+            on_press: root.toggle_listening()
+
