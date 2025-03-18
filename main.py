@@ -7,13 +7,14 @@ from kivy.uix.boxlayout import BoxLayout
 from transformers import pipeline
 from kivy.properties import BooleanProperty
 from kivy.clock import Clock
+import os
 
 
 # Load the DialoGPT model
 chatbot = pipeline("text-generation", model="microsoft/DialoGPT-medium")
 
 # WeatherAPI key
-API_KEY = "f5e8240959ba4484bac123118240312"
+API_KEY = os.environ.get("API_KEY")
 
 # Initialize recognizer and TTS engine
 recognizer = sr.Recognizer()
