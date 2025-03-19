@@ -8,13 +8,15 @@ from transformers import pipeline
 from kivy.properties import BooleanProperty
 from kivy.clock import Clock
 import os
+from dotenv import load_dotenv
 
 
 # Load the DialoGPT model
 chatbot = pipeline("text-generation", model="microsoft/DialoGPT-medium")
 
 # WeatherAPI key
-API_KEY = os.environ.get("API_KEY")
+load_dotenv()
+API_KEY = os.getenv("API_KEY")
 
 recognizer = sr.Recognizer()
 tts = pyttsx3.init()
