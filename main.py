@@ -16,7 +16,6 @@ chatbot = pipeline("text-generation", model="microsoft/DialoGPT-medium")
 # WeatherAPI key
 API_KEY = os.environ.get("API_KEY")
 
-# Initialize recognizer and TTS engine
 recognizer = sr.Recognizer()
 tts = pyttsx3.init()
 
